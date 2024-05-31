@@ -1,0 +1,31 @@
+{
+    "name": "pixelblock-cli",
+    "version": "0.0.11",
+    "main": "bin/install.js",
+    "bin": {
+        "add": "./bin/install.js"
+    },
+    "dependencies": {
+        "@types/react": "^18.3.3",
+        "commander": "^12.1.0",
+        "fs-extra": "^11.2.0",
+        "inquirer": "^9.2.22",
+        "react": "^18.3.1",
+        "react-dom": "^18.0.0"
+    },
+    "files": [
+        "bin",
+        "components",
+        "README.md"
+    ],
+    "keywords": [
+        "cli",
+        "pixelblock",
+        "react",
+        "component",
+        "nextjs"
+    ],
+    "author": "milapdave",
+    "license": "MIT",
+    "description": "A CLI tool for installing PixelBlock UI components."
+}
