@@ -25,7 +25,7 @@ const InputField: React.FC<InputFieldProps> = ({
    ...props
 }) => {
     let inputClassName =
-        'w-full py-2 px-4 border rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 resize-none';
+        'w-full py-2 px-4 border bg-transparent rounded-md transition-colors duration-200 focus:outline-none focus:ring-0 focus:ring-offset-1 resize-none';
 
     // Handle color prop
     switch (color) {
@@ -45,7 +45,7 @@ const InputField: React.FC<InputFieldProps> = ({
             inputClassName += ' border-red-600 bg-red-100/30 focus:border-red-700 focus:ring-red-500';
             break;
         default:
-            inputClassName += ' border-gray-300 bg-white focus:border-gray-400 focus:ring-gray-300';
+            inputClassName += ' border-gray-400 dark:border-white/10 focus:border-gray-400 focus:ring-gray-300/10';
             break;
     }
 
@@ -77,14 +77,14 @@ const InputField: React.FC<InputFieldProps> = ({
             {label && (
                 <label
                     htmlFor={props.id}
-                    className="text-gray-900 text-sm pointer-events-none transition-all duration-200 ease-in-out pb-1 inline-block"
+                    className="text-gray-900 dark:text-zinc-100 text-sm pointer-events-none transition-all duration-200 ease-in-out pb-1 inline-block"
                 >
                     {label}
                 </label>
             )}
             {/* Render the appropriate input type based on the 'type' prop */}
             {type === 'textarea'? (
-                <textarea className={`${combinedClasses} resize-y`} {...props}></textarea>
+                <textarea className={`${combinedClasses} resize-y min-h-36`} {...props}></textarea>
             ) : (
                 <input type={type} className={combinedClasses} {...props} />
             )}
