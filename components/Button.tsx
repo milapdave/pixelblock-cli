@@ -9,7 +9,7 @@ export function cn(...inputs: ClassValue[]) {
 
 type Color = 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
 
-type ButtonVariant = 'solid' | 'outline' | 'ghost' | 'link' | 'shadow' | 'slideBottom';
+type ButtonVariant = 'solid' | 'outline' | 'ghost' | 'link' | 'shadow';
 
 type ButtonSize = 'sm' | 'md' | 'lg';
 
@@ -66,7 +66,7 @@ const Button: React.FC<ButtonProps> = ({
       buttonClassName += ' h-10 px-4 text-sm font-medium';
       break;
     case 'md':
-      buttonClassName += '  h-10 px-6 text-base font-medium';
+      buttonClassName += '  h-10 px-6 text-sm md:text-base font-medium';
       break;
     case 'lg':
       buttonClassName += ' h-12 px-8 text-base font-medium';
