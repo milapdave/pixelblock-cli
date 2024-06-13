@@ -1,9 +1,9 @@
 {
     "name": "pixelblock-cli",
-    "version": "0.0.19",
+    "version": "0.0.24",
     "main": "bin/install.js",
     "bin": {
-        "add": "./bin/install.js"
+        "pixelblock-cli": "./bin/install.js"
     },
     "dependencies": {
         "@types/react": "^18.3.3",

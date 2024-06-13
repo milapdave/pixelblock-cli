@@ -4,12 +4,15 @@ const fs = require('fs-extra');
 const path = require('path');
 const { Command } = require('commander');
 const { execSync } = require('child_process');
+const packageJson = require('../package.json'); // Ensure this path is correct
 
 const program = new Command();
 
 program
- .argument('<component>', 'Component name to install')
- .action(async (component) => {
+  .version(packageJson.version) // Set the version from package.json
+  .command('add <component>')
+  .description('Add a PixelBlockUI component')
+  .action(async (component) => {
     const templatesDir = path.join(__dirname, '../components');
     const projectRoot = process.cwd();
     const destinationDir = path.join(projectRoot, 'components', 'PixelBlock');
