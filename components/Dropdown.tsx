@@ -93,20 +93,20 @@ const Dropdown: React.FC<DropdownProps> = ({
   }, []);
 
   const renderOptionDefault = (option: { value: string; label: string; disabled?: boolean }) => (
-    <div className={`p-2 ${option.disabled ? 'text-gray-400 cursor-not-allowed' : 'cursor-pointer'}`}>
+    <div className={`p-2 text-sm ${option.disabled ? 'text-gray-400 cursor-not-allowed' : 'cursor-pointer'}`}>
       {option.label}
     </div>
   );
 
   return (
     <div className="relative w-64" ref={dropdownRef}>
-      <div
-        className="bg-white border border-gray-300 rounded-md p-2 flex justify-between items-center cursor-pointer"
+      <button
+        className="bg-white border border-gray-300 rounded-md px-5 py-2 flex justify-between items-center cursor-pointer w-full text-md"
         onClick={toggleDropdown}
       >
         <span>{selected.length > 0 ? selected.map(sel => options.find(opt => opt.value === sel)?.label).join(', ') : placeholder}</span>
         <svg
-          className={`w-4 h-4 transform transition-transform ${isOpen ? 'rotate-180' : 'rotate-0'}`}
+          className={`w-4 h-4 transform transition-transform ms-3 ${isOpen ? 'rotate-180' : 'rotate-0'}`}
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
@@ -114,24 +114,29 @@ const Dropdown: React.FC<DropdownProps> = ({
         >
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
         </svg>
-      </div>
+      </button>
 
       {isOpen && (
-        <div className="absolute bg-white border border-gray-300 rounded-md mt-1 w-full z-10">
+        <div className="z-10  bg-white rounded-lg shadow w-full dark:bg-gray-700">
           {withSearch && (
-            <input
-              type="text"
-              value={searchTerm}
-              onChange={handleSearch}
-              className="w-full p-2 border-b border-gray-300"
-              placeholder={searchPlaceholder}
-            />
+            <div className='p-3'>
+              <label htmlFor="input-group-search" className="sr-only">Search</label>
+              <div className="relative">
+                <div className="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
+                  <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                  </svg>
+                </div>
+                <input type="text" id="input-group-search"  value={searchTerm} onChange={handleSearch} className="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder={searchPlaceholder} />
+              </div>
+            </div>
+
           )}
-          <div className="max-h-60 overflow-y-auto">
+          <div className="max-h-60 overflow-y-auto px-3 pb-3">
             {filteredOptions.map((option, index) => (
               <div
                 key={index}
-                className={`p-2 hover:bg-gray-100 ${option.disabled ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+                className={` hover:bg-gray-100 ${option.disabled ? 'cursor-not-allowed' : 'cursor-pointer'}`}
                 onClick={() => !option.disabled && handleSelect(option.value)}
               >
                 {renderOption ? renderOption(option) : renderOptionDefault(option)}
