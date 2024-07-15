@@ -29,7 +29,7 @@ You can install PixelBlock CLI globally via npm or Yarn:
 
 Alternatively, you can use it directly with `npx` without installing it globally:
 
-`npx pixelblock-cli <component>` 
+`npx pixelblock-cli add <component>` 
 
 
 Usage
@@ -42,11 +42,11 @@ After installing, you can use the `npx pixelblock-cli` command to install compon
 
 To install a component, run the following command:
 
-`npx pixelblock-cli <component>` 
+`npx pixelblock-cli add <component>` 
 
 Replace `<component>` with the name of the component you want to install. For example:
 
-`npx pixelblock-cli button` 
+`npx pixelblock-cli add button` 
 
 This will copy the `Button.tsx` file from the templates directory to your project's `components/PixelBlock` directory.
 
@@ -61,7 +61,7 @@ This will copy the `Button.tsx` file from the templates directory to your projec
     
 2.  **Run the install command**:
     
-    `npx pixelblock-cli Button` 
+    `npx pixelblock-cli add Button` 
     
     This will copy the `Button.tsx` template file to your project's `components/PixelBlock` directory.
     
@@ -103,7 +103,7 @@ Troubleshooting
     
     Ensure you have installed the CLI tool globally or are using `npx`:
     
-    `npx pixelblock-cli Button` 
+    `npx pixelblock-cli add Button` 
     
 
 2.  **Component Not Found**
@@ -115,7 +115,7 @@ Troubleshooting
     
     If you encounter permissions issues, try running the command with elevated permissions (e.g., using `sudo` on Unix-based systems):
     
-    `sudo npx pixelblock-cli Button` 
+    `sudo npx pixelblock-cli add Button` 
     
 
 
