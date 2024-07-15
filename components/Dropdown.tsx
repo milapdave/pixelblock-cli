@@ -132,11 +132,11 @@ const Dropdown: React.FC<DropdownProps> = ({
             </div>
 
           )}
-          <div className="max-h-60 overflow-y-auto px-3 pb-3">
+          <div className="max-h-60 overflow-y-auto">
             {filteredOptions.map((option, index) => (
               <div
                 key={index}
-                className={` hover:bg-gray-100 ${option.disabled ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+                className={` hover:bg-gray-100 px-3 ${option.disabled ? 'cursor-not-allowed' : 'cursor-pointer'}`}
                 onClick={() => !option.disabled && handleSelect(option.value)}
               >
                 {renderOption ? renderOption(option) : renderOptionDefault(option)}
