@@ -41,7 +41,7 @@ const Button: React.FC<ButtonProps> = ({
   ...props
 }) => {
   let buttonClassName =
-    "inline-flex  gap-2  whitespace-nowrap items-center justify-center rounded-md  transition-all relative overflow-hidden duration-300 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50";
+    "inline-flex  gap-2  whitespace-nowrap items-center disabled:opacity-50 justify-center rounded-md  transition-all relative overflow-hidden duration-300 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50";
 
   // Handle color prop
   switch (color) {
@@ -75,10 +75,10 @@ const Button: React.FC<ButtonProps> = ({
       buttonClassName += " h-10 px-4 text-sm font-medium";
       break;
     case "md":
-      buttonClassName += "  h-10 px-6 text-sm md:text-base font-medium";
+      buttonClassName += "  h-10 px-4 text-sm md:text-base font-medium";
       break;
     case "lg":
-      buttonClassName += " h-12 px-8 text-base font-medium";
+      buttonClassName += " h-12 px-4 text-base font-medium";
       break;
     default:
       break;
