@@ -71,12 +71,13 @@ Directory Structure
 
 Ensure your project directory has the following structure for the CLI to work correctly:
 
-`your-project/
-├── components/ 
-│   └── PixelBlock/ 
-│       └── Button.tsx 
-└── ...`
-
+```
+your-project/
+├── components/
+│   └── PixelBlock/
+│       └── Button.tsx
+└── 
+```
 
 
 Contributing
