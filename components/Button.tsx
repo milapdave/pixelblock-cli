@@ -7,13 +7,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-type Color =
-  | "default"
-  | "primary"
-  | "secondary"
-  | "success"
-  | "warning"
-  | "danger";
+type Color = "primary" | "secondary" | "info" | "success" | "warning" | "error";
 
 type ButtonVariant = "solid" | "outline" | "ghost" | "link" | "shadow";
 
@@ -31,8 +25,8 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const Button: React.FC<ButtonProps> = ({
-  color = "default",
-  variant,
+  color = "primary", // Default color
+  variant = "solid",
   size = "md",
   radius = "md",
   children,
@@ -41,33 +35,7 @@ const Button: React.FC<ButtonProps> = ({
   ...props
 }) => {
   let buttonClassName =
-    "inline-flex  gap-2  whitespace-nowrap items-center disabled:opacity-50 justify-center rounded-md  transition-all relative overflow-hidden duration-300 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50";
-
-  // Handle color prop
-  switch (color) {
-    case "primary":
-      buttonClassName +=
-        " bg-blue-600 text-white hover:bg-blue-700 border-blue-600";
-      break;
-    case "secondary":
-      buttonClassName +=
-        " bg-green-600 text-white hover:bg-green-700  border-green-600";
-      break;
-    case "success":
-      buttonClassName +=
-        " bg-green-500 text-white hover:bg-green-600 border-green-500";
-      break;
-    case "warning":
-      buttonClassName +=
-        " bg-yellow-600 text-black hover:bg-yellow-700 border-yellow-600";
-      break;
-    case "danger":
-      buttonClassName +=
-        " bg-red-600 text-white hover:bg-red-700 border-red-600";
-      break;
-    default:
-      break;
-  }
+    "inline-flex gap-2 items-center whitespace-nowrap disabled:opacity-50 justify-center rounded-md transition-all relative overflow-hidden duration-300 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50";
 
   // Size classes
   switch (size) {
@@ -75,7 +43,7 @@ const Button: React.FC<ButtonProps> = ({
       buttonClassName += " h-10 px-4 text-sm font-medium";
       break;
     case "md":
-      buttonClassName += "  h-10 px-4 text-sm md:text-base font-medium";
+      buttonClassName += " h-10 px-4 text-sm md:text-base font-medium";
       break;
     case "lg":
       buttonClassName += " h-12 px-4 text-base font-medium";
@@ -105,82 +73,115 @@ const Button: React.FC<ButtonProps> = ({
       break;
   }
 
-  // Updated switch statement for variant
+  // Handle variant styles
   switch (variant) {
-    case "outline":
-      let outlineColorClass = "";
+    case "solid":
       switch (color) {
         case "primary":
-          outlineColorClass = "border-blue-700 text-blue-700 hover:text-white";
+          buttonClassName +=
+            " bg-primary-500 text-white hover:bg-primary-700 border-primary";
           break;
         case "secondary":
-          outlineColorClass =
-            "border-green-700 text-green-700 hover:bg-green-700/20 ";
+          buttonClassName +=
+            " bg-secondary-500 text-white hover:bg-secondary-700 border-secondary";
+          break;
+        case "info":
+          buttonClassName +=
+            " bg-info-500 text-white hover:bg-info-700 border-info";
           break;
         case "success":
-          outlineColorClass =
-            "border-green-600 text-green-600 hover:text-white";
+          buttonClassName +=
+            " bg-success-500 text-white hover:bg-success-700 border-success";
           break;
         case "warning":
-          outlineColorClass =
-            "border-yellow-700 text-yellow-700 hover:text-white";
+          buttonClassName +=
+            " bg-warning-500 text-black hover:bg-warning-700 border-warning";
           break;
-        case "danger":
-          outlineColorClass = "border-red-700 text-red-700 hover:text-white";
+        case "error":
+          buttonClassName +=
+            " bg-error-500 text-white hover:bg-error-700 border-error";
           break;
         default:
-          outlineColorClass = "border-gray-400";
+          break;
       }
-      buttonClassName += ` ${outlineColorClass} bg-transparent  border-2`;
+      break;
+    case "outline":
+      switch (color) {
+        case "primary":
+          buttonClassName +=
+            " bg-transparent border-2 border-primary-500 text-primary hover:bg-primary-500 hover:text-white";
+          break;
+        case "secondary":
+          buttonClassName +=
+            " bg-transparent border-2 border-secondary-500 text-secondary hover:bg-secondary-500 hover:text-white";
+          break;
+        case "info":
+          buttonClassName +=
+            " bg-transparent border-2 border-info-500 text-info hover:bg-info-500 hover:text-white";
+          break;
+        case "success":
+          buttonClassName +=
+            " bg-transparent border-2 border-success-500 text-success hover:bg-success-500 hover:text-white";
+          break;
+        case "warning":
+          buttonClassName +=
+            " bg-transparent border-2 border-warning-500 text-warning hover:bg-warning-500 hover:text-white";
+          break;
+        case "error":
+          buttonClassName +=
+            " bg-transparent border-2 border-error-500 text-error hover:bg-error-500 hover:text-white";
+          break;
+        default:
+          break;
+      }
       break;
     case "ghost":
-      let ghostColorClass = "";
       switch (color) {
         case "primary":
-          ghostColorClass = " text-blue-600 hover:bg-blue-50";
+          buttonClassName += " bg-transparent text-primary hover:bg-primary-500/10";
           break;
         case "secondary":
-          ghostColorClass =
-            "border-green-700 text-green-700 hover:bg-green-700/20 ";
+          buttonClassName += " bg-transparent text-secondary hover:bg-secondary-500/10";
+          break;
+        case "info":
+          buttonClassName += " bg-transparent text-info hover:bg-info-500/10";
           break;
         case "success":
-          ghostColorClass =
-            "border-green-600 text-green-600 hover:bg-green-600/20";
+          buttonClassName += " bg-transparent text-success hover:bg-success-500/10";
           break;
         case "warning":
-          ghostColorClass =
-            "border-yellow-700 text-yellow-700  hover:bg-yellow-700/20";
+          buttonClassName += " bg-transparent text-warning hover:bg-warning-500/10";
           break;
-        case "danger":
-          ghostColorClass = "border-red-700 text-red-700 hover:bg-red-700/20";
+        case "error":
+          buttonClassName += " bg-transparent text-error hover:bg-error-500/10";
           break;
         default:
-          ghostColorClass = "border-gray-400";
+          break;
       }
-      buttonClassName += ` ${ghostColorClass} bg-transparent`;
       break;
     case "link":
-      let linkColorClass = "";
       switch (color) {
         case "primary":
-          linkColorClass = " text-blue-600 ";
+          buttonClassName += " bg-transparent text-primary hover:underline";
           break;
         case "secondary":
-          linkColorClass = "text-green-700";
+          buttonClassName += " bg-transparent text-secondary hover:underline";
+          break;
+        case "info":
+          buttonClassName += " bg-transparent text-info hover:underline";
           break;
         case "success":
-          linkColorClass = "text-green-600";
+          buttonClassName += " bg-transparent text-success hover:underline";
           break;
         case "warning":
-          linkColorClass = "text-yellow-700";
+          buttonClassName += " bg-transparent text-warning hover:underline";
           break;
-        case "danger":
-          linkColorClass = "text-red-700";
+        case "error":
+          buttonClassName += " bg-transparent text-error hover:underline";
           break;
         default:
-          linkColorClass = "border-gray-400";
+          break;
       }
-      buttonClassName += ` ${linkColorClass} !px-0 !bg-transparent hover:underline`;
       break;
     case "shadow":
       buttonClassName += " shadow-lg hover:shadow-xl";
