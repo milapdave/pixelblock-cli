@@ -9,8 +9,7 @@ export function cn(...inputs: ClassValue[]) {
 
 interface AvatarProps {
     src?: string;
-    alt?: string;
-    fallback?: string;
+    name?: string;
     size?: 'sm' | 'md' | 'lg';
     isBordered?: boolean;
     color?: 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
@@ -20,8 +19,7 @@ interface AvatarProps {
 
 const Avatar: React.FC<AvatarProps> = ({
     src,
-    alt,
-    fallback,
+    name,
     size = 'md',
     isBordered = false,
     color = 'default',
@@ -51,6 +49,13 @@ const Avatar: React.FC<AvatarProps> = ({
         full: 'rounded-full',
     };
 
+    const getInitials = (name?: string) => {
+        if (!name) return '';
+        const nameParts = name.split(' ');
+        const initials = nameParts.map(part => part[0]).join('');
+        return initials.toUpperCase();
+    };
+
     return (
         <div
             className={cn(
@@ -63,10 +68,10 @@ const Avatar: React.FC<AvatarProps> = ({
             )}
         >
             {src ? (
-                <img src={src} alt={alt} className="w-full h-full object-cover m-0" />
+                <img src={src} alt={name} className="w-full h-full object-cover m-0" />
             ) : (
                 <div className="flex items-center justify-center w-full h-full text-black">
-                    {fallback}
+                    {getInitials(name)}
                 </div>
             )}
         </div>
