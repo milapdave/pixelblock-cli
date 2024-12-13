@@ -24,6 +24,19 @@ const askQuestion = (question) => {
   });
 };
 
+// Check if the dependencies are already installed
+const checkDependenciesInstalled = (projectRoot) => {
+  try {
+    const nodeModulesPath = path.join(projectRoot, 'node_modules');
+    const clsxInstalled = fs.existsSync(path.join(nodeModulesPath, 'clsx'));
+    const tailwindMergeInstalled = fs.existsSync(path.join(nodeModulesPath, 'tailwind-merge'));
+    return clsxInstalled && tailwindMergeInstalled;
+  } catch (error) {
+    console.error(`Error checking dependencies: ${error.message}`);
+    return false;
+  }
+};
+
 program
   .version(packageJson.version)
   .command('add <component>')
@@ -51,13 +64,18 @@ program
       fs.copyFileSync(sourceFile, destinationFile);
       console.log(`Component ${component} installed successfully.`);
 
-      // Attempt to install dependencies
-      try {
-        console.log('Installing dependencies...');
-        execSync(`cd ${destinationDir} && npm install clsx tailwind-merge`, { stdio: 'inherit' });
-        console.log('Dependencies installed successfully.');
-      } catch (error) {
-        console.error(`Failed to install dependencies: ${error.message}`);
+      // Check if dependencies are installed; only install if necessary
+      const dependenciesInstalled = checkDependenciesInstalled(projectRoot);
+      if (!dependenciesInstalled) {
+        try {
+          console.log('Installing dependencies...');
+          execSync(`cd ${projectRoot} && npm install clsx tailwind-merge`, { stdio: 'inherit' });
+          console.log('Dependencies installed successfully.');
+        } catch (error) {
+          console.error(`Failed to install dependencies: ${error.message}`);
+        }
+      } else {
+        console.log('Dependencies already installed, skipping installation.');
       }
     } else {
       console.error(`Component ${component} not found.`);

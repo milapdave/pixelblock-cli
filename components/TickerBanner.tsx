@@ -18,7 +18,7 @@ const TickerBanner: React.FC<TickerBannerProps> = ({
       className={`relative flex w-full overflow-hidden py-2 md:py-3 text-xs md:text-sm font-medium text-white ${className}`}
     >
       <ul
-        className="flex ticker-animation space-x-4 md:space-x-10"
+        className="flex ticker-animation space-x-4 md:space-x-10 list-none !m-0"
         style={{ animation: `ticker ${animationDuration}s linear infinite` }}
       >
         <li className="whitespace-nowrap px-10">{news}</li>
@@ -26,7 +26,7 @@ const TickerBanner: React.FC<TickerBannerProps> = ({
       </ul>
 
       <ul
-        className="flex ticker-animation space-x-4 md:space-x-10"
+        className="flex ticker-animation space-x-4 md:space-x-10 list-none !m-0"
         style={{ animationDuration }}
       >
         <li className="whitespace-nowrap px-10">{news}</li>
