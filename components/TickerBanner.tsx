@@ -11,7 +11,7 @@ interface TickerBannerProps {
 const TickerBanner: React.FC<TickerBannerProps> = ({
   news,
   className = "bg-blue-500",
-  animationDuration = "15s",
+  animationDuration = "15",
 }) => {
   return (
     <div
@@ -19,7 +19,7 @@ const TickerBanner: React.FC<TickerBannerProps> = ({
     >
       <ul
         className="flex ticker-animation space-x-4 md:space-x-10"
-        style={{ animationDuration }}
+        style={{ animation: `ticker ${animationDuration}s linear infinite` }}
       >
         <li className="whitespace-nowrap px-10">{news}</li>
         <li className="whitespace-nowrap px-10">{news}</li>
@@ -44,7 +44,7 @@ const TickerBanner: React.FC<TickerBannerProps> = ({
 					}
 				}
 				.ticker-animation {
-					animation: ticker 15s linear infinite;
+            will-change: transform;
 				}
 				`}
       </style>
