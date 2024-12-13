@@ -40,7 +40,7 @@ const MenuAccordion: React.FC<MenuAccordionProps> = ({ navItems }) => {
   const focusClasses = "focus:text-primary focus:outline focus:outline-1";
 
   return (
-    <ul className="m-0 flex w-full list-none flex-col flex-wrap p-0 md:flex-row md:gap-6 md:gap-y-16 text-black">
+    <ul className="m-0 flex w-full list-none flex-col flex-wrap p-0 md:flex-row md:gap-6 md:gap-y-16 text-black dark:text-white">
       {navItems.map((navItem, index) => {
         const key = navItem.title.toLowerCase().replace(/\s+/g, "");
 
