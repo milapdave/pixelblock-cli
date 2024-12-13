@@ -81,7 +81,7 @@ const Button: React.FC<ButtonProps> = ({
       switch (color) {
         case "primary":
           buttonClassName +=
-            " bg-primary-500 text-white hover:bg-primary-500/90 border-primary hover:shadow-Button focus:shadow-none";
+            " bg-primary-500 text-white hover:bg-primary-700 border-primary hover:shadow-Button focus:shadow-none";
           break;
         case "secondary":
           buttonClassName +=
@@ -141,27 +141,27 @@ const Button: React.FC<ButtonProps> = ({
       switch (color) {
         case "primary":
           buttonClassName +=
-            " bg-transparent border-2 border-primary-500/10 text-primary-500 hover:bg-primary-500/10";
+            " bg-transparent border-2 border-primary-50 text-primary-500 hover:bg-primary-50";
           break;
         case "secondary":
           buttonClassName +=
-            " bg-transparent border-2 border-secondary-500/10 text-secondary-500 hover:bg-secondary-500/10";
+            " bg-transparent border-2 border-secondary-50 text-secondary-500 hover:bg-secondary-50";
           break;
         case "info":
           buttonClassName +=
-            " bg-transparent border-2 border-info-500/10 text-info-500 hover:bg-info-500/10";
+            " bg-transparent border-2 border-info-50 text-info-500 hover:bg-info-50";
           break;
         case "success":
           buttonClassName +=
-            " bg-transparent border-2 border-success-500/10 text-success-500 hover:bg-success-500/10";
+            " bg-transparent border-2 border-success-50 text-success-500 hover:bg-success-50";
           break;
         case "warning":
           buttonClassName +=
-            " bg-transparent border-2 border-warning-500/10 text-warning-500 hover:bg-warning-500/10";
+            " bg-transparent border-2 border-warning-50 text-warning-500 hover:bg-warning-50";
           break;
         case "error":
           buttonClassName +=
-            " bg-transparent border-2 border-error-500/10 text-error-500 hover:bg-error-500/10";
+            " bg-transparent border-2 border-error-50 text-error-500 hover:bg-error-50";
           break;
         default:
           break;
@@ -170,23 +170,28 @@ const Button: React.FC<ButtonProps> = ({
     case "link":
       switch (color) {
         case "primary":
-          buttonClassName += " !p-0 bg-transparent text-primary-500 hover:underline";
+          buttonClassName +=
+            " !p-0 bg-transparent text-primary-500 hover:underline";
           break;
         case "secondary":
           buttonClassName +=
-            " bg-transparent text-secondary-500 hover:underline";
+            " !p-0 bg-transparent text-secondary-500 hover:underline";
           break;
         case "info":
-          buttonClassName += " bg-transparent text-info-500 hover:underline";
+          buttonClassName +=
+            " !p-0 bg-transparent text-info-500 hover:underline";
           break;
         case "success":
-          buttonClassName += " bg-transparent text-success-500 hover:underline";
+          buttonClassName +=
+            " !p-0 bg-transparent text-success-500 hover:underline";
           break;
         case "warning":
-          buttonClassName += " bg-transparent text-warning-500 hover:underline";
+          buttonClassName +=
+            " !p-0 bg-transparent text-warning-500 hover:underline";
           break;
         case "error":
-          buttonClassName += " bg-transparent text-error-500 hover:underline";
+          buttonClassName +=
+            " !p-0 bg-transparent text-error-500 hover:underline";
           break;
         default:
           break;

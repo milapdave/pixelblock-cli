@@ -1,6 +1,6 @@
 {
     "name": "pixelblock-cli",
-    "version": "0.0.42",
+    "version": "0.0.43",
     "main": "bin/install.js",
     "bin": {
         "pixelblock-cli": "./bin/install.js"

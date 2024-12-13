@@ -24,6 +24,7 @@ export const AccordionItem: React.FC<AccordionItemProps> = ({
       height="24"
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
+      className="dark:invert"
     >
       <path
         d="M4 12h16M12 4v16"
@@ -39,6 +40,7 @@ export const AccordionItem: React.FC<AccordionItemProps> = ({
       height="24"
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
+      className="dark:invert"
     >
       <path
         d="M4 12h16"
@@ -53,7 +55,9 @@ export const AccordionItem: React.FC<AccordionItemProps> = ({
 }) => {
   return (
     <div
-      className={`rounded-lg shadow-lg border ${isOpen ? "border-blue-600" : ""}`}
+      className={`rounded-lg shadow-lg border ${
+        isOpen ? "border-primary-600" : ""
+      }`}
     >
       <button
         className="w-full text-left focus:outline-none font-semibold text-base lg:text-lg lg:p-6 p-4"
@@ -98,7 +102,7 @@ export const Accordion: React.FC<AccordionProps> = ({
   };
 
   return (
-    <div className="mx-auto grid gap-6">
+    <div className="grid w-full gap-6">
       {React.Children.map(children, (child, index) =>
         React.isValidElement(child)
           ? React.cloneElement(child, {

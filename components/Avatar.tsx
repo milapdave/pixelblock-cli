@@ -34,11 +34,11 @@ const Avatar: React.FC<AvatarProps> = ({
 
     const colorClasses = {
         default: 'bg-gray-200',
-        primary: 'bg-blue-500',
-        secondary: 'bg-gray-500',
-        success: 'bg-green-500',
-        warning: 'bg-yellow-500',
-        danger: 'bg-red-500',
+        primary: 'bg-primary-500',
+        secondary: 'bg-secondary-500',
+        success: 'bg-success-500',
+        warning: 'bg-warning-500',
+        danger: 'bg-error-500',
     };
 
     const radiusClasses = {

@@ -24,14 +24,14 @@ interface InputFieldProps
   color?: Color;
   radius?: Radius;
   label?: string;
-  type?: "input" | "textarea" | "number" | "password" | "email";
+  type?: "text" | "textarea" | "number" | "password" | "email";
 }
 
 const InputField: React.FC<InputFieldProps> = ({
   color = "default",
   radius = "md",
   label,
-  type = "input", // Default to 'input'
+  type = "text", // Default to 'input'
   ...props
 }) => {
   let inputClassName =
@@ -41,23 +41,23 @@ const InputField: React.FC<InputFieldProps> = ({
   switch (color) {
     case "primary":
       inputClassName +=
-        " border-blue-600 focus:border-blue-700 focus:ring-blue-500";
+        " border-primary-500 focus:border-primary-700 focus:ring-primary-400";
       break;
     case "secondary":
       inputClassName +=
-        " border-green-600 focus:border-green-700 focus:ring-green-500";
+        " border-secondary-500 focus:border-secondary-700 focus:ring-secondary-400";
       break;
     case "success":
       inputClassName +=
-        " border-green-500 bg-green-100/30 focus:border-green-600 focus:ring-green-400";
+        " border-success-500 bg-success-50 focus:border-success-600 focus:ring-success-400";
       break;
     case "warning":
       inputClassName +=
-        " border-yellow-600 text-black bg-yellow-100/30 focus:border-yellow-700 focus:ring-yellow-500";
+        " border-warning-500 text-black bg-warning-50 focus:border-warning-600 focus:ring-warning-400";
       break;
     case "danger":
       inputClassName +=
-        " border-red-600 bg-red-100/30 focus:border-red-700 focus:ring-red-500";
+        " border-error-500 bg-error-50 focus:border-error-600 focus:ring-error-400";
       break;
     default:
       inputClassName +=
