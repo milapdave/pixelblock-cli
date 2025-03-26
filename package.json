@@ -1,9 +1,14 @@
 {
     "name": "pixelblock-cli",
-    "version": "0.0.50",
+    "version": "0.0.51",
     "main": "bin/install.js",
     "bin": {
         "pixelblock-cli": "./bin/install.js"
+    },
+    "scripts": {
+        "link": "npm link",
+        "unlink": "npm unlink",
+        "test": "node bin/install.js"
     },
     "dependencies": {
         "@types/react": "^18.3.3",
@@ -13,7 +18,12 @@
         "inquirer": "^9.2.22",
         "react": "^18.3.1",
         "react-dom": "^18.3.1",
-        "tailwind-merge": "^2.3.0"
+        "tailwind-merge": "^2.3.0",
+        "ora": "^5.4.1",
+        "chalk": "^4.1.2",
+        "boxen": "^5.1.2",
+        "update-notifier": "^5.1.0",
+        "semver": "^7.5.4"
     },
     "files": [
         "bin",
@@ -25,9 +35,15 @@
         "pixelblock",
         "react",
         "component",
-        "nextjs"
+        "nextjs",
+        "ui-components",
+        "tailwindcss"
     ],
     "author": "milapdave",
     "license": "MIT",
-    "description": "A CLI tool for installing PixelBlock UI components."
+    "description": "A CLI tool for installing PixelBlock UI components with advanced features and better user experience.",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/milapdave/pixelblock-cli"
+    }
 }
