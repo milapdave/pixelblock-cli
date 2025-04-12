@@ -1,9 +1,9 @@
 {
     "name": "pixelblock-cli",
-    "version": "0.0.51",
+    "version": "0.0.52",
     "main": "bin/install.js",
     "bin": {
-        "pixelblock-cli": "./bin/install.js"
+        "pixelblock-cli": "bin/install.js"
     },
     "scripts": {
         "link": "npm link",
@@ -44,6 +44,6 @@
     "description": "A CLI tool for installing PixelBlock UI components with advanced features and better user experience.",
     "repository": {
         "type": "git",
-        "url": "https://github.com/milapdave/pixelblock-cli"
+        "url": "git+https://github.com/milapdave/pixelblock-cli.git"
     }
 }

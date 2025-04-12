@@ -91,6 +91,28 @@ async function main() {
     }
   };
 
+  // NEW: Block installation function
+  const installBlock = async (blockName, destinationDir) => {
+    spinner = ora(`Installing ${blockName} block...`).start();
+
+    try {
+      const blockSourceDir = path.join(__dirname, '../blocks', blockName);
+      
+      // Check if block exists
+      if (!fs.existsSync(blockSourceDir)) {
+        throw new Error(`Block "${blockName}" not found`);
+      }
+
+      // Copy all files from block directory to destination
+      await fs.copy(blockSourceDir, destinationDir, { overwrite: true });
+      
+      spinner.succeed(`Block ${blockName} installed successfully`);
+    } catch (error) {
+      spinner.fail(`Failed to install block ${blockName}`);
+      throw error;
+    }
+  };
+
   // List available components
   const listComponents = () => {
     const componentsDir = path.join(__dirname, '../components');
@@ -99,6 +121,18 @@ async function main() {
         .filter(file => file.endsWith('.tsx'))
         .map(file => file.replace('.tsx', ''));
       return components;
+    } catch {
+      return [];
+    }
+  };
+
+  // NEW: List available blocks
+  const listBlocks = () => {
+    const blocksDir = path.join(__dirname, '../blocks');
+    try {
+      const blocks = fs.readdirSync(blocksDir)
+        .filter(dir => fs.statSync(path.join(blocksDir, dir)).isDirectory());
+      return blocks;
     } catch {
       return [];
     }
@@ -201,23 +235,105 @@ async function main() {
       }
     });
 
-  // List components command
+  // NEW: Add block command
+  program
+    .command('add-block [blockName]')
+    .description('Add a complete PixelBlock UI block (like login or blog)')
+    .option('-f, --force', 'Force installation without confirmation')
+    .action(async (blockName, options) => {
+      try {
+        showWelcome();
+        await validateProjectStructure();
+
+        const blocks = listBlocks();
+        
+        // If no block specified, show selection prompt
+        if (!blockName) {
+          const answer = await inquirer.prompt([{
+            type: 'list',
+            name: 'block',
+            message: 'Select a block to install:',
+            choices: blocks
+          }]);
+          blockName = answer.block;
+        }
+
+        // Validate block exists
+        if (!blocks.includes(blockName)) {
+          console.error(chalk.red(`Error: Block '${blockName}' not found`));
+          console.log(chalk.yellow('\nAvailable blocks:'));
+          blocks.forEach(b => console.log(`  - ${b}`));
+          process.exit(1);
+        }
+
+        const projectRoot = process.cwd();
+        const destinationDir = path.join(projectRoot, 'components', 'PixelBlock', 'blocks', blockName);
+
+        // Check if block already exists
+        if (fs.existsSync(destinationDir) && !options.force) {
+          const { overwrite } = await inquirer.prompt([{
+            type: 'confirm',
+            name: 'overwrite',
+            message: `Block ${blockName} already exists. Overwrite?`,
+            default: false
+          }]);
+
+          if (!overwrite) {
+            console.log(chalk.yellow('Installation cancelled'));
+            process.exit(0);
+          }
+        }
+
+        // Create directory if it doesn't exist
+        await fs.ensureDir(destinationDir);
+
+        // Check and install dependencies
+        const missingDeps = await checkDependencies(projectRoot);
+        if (missingDeps.length > 0) {
+          await installDependencies(missingDeps);
+        }
+
+        // Install block
+        await installBlock(blockName, destinationDir);
+
+        console.log(chalk.green('\n✨ Block installation complete!'));
+        console.log(chalk.dim('\nImport your block like this:'));
+        console.log(chalk.cyan(`import { ${blockName.charAt(0).toUpperCase() + blockName.slice(1)} } from '@/components/PixelBlock/blocks/${blockName}'`));
+
+      } catch (error) {
+        if (spinner) spinner.fail('Operation failed');
+        console.error(chalk.red(`\n${error.message}`));
+        process.exit(1);
+      }
+    });
+
+  // Modified: List command to show both components and blocks
   program
     .command('list')
-    .description('List all available components')
+    .description('List all available components and blocks')
     .action(() => {
       showWelcome();
       const components = listComponents();
+      const blocks = listBlocks();
       
-      if (components.length === 0) {
-        console.log(chalk.yellow('No components available'));
+      if (components.length === 0 && blocks.length === 0) {
+        console.log(chalk.yellow('No components or blocks available'));
         return;
       }
 
-      console.log(chalk.cyan('\nAvailable components:'));
-      components.forEach(component => {
-        console.log(chalk.white(`  - ${component}`));
-      });
+      if (components.length > 0) {
+        console.log(chalk.cyan('\nAvailable components:'));
+        components.forEach(component => {
+          console.log(chalk.white(`  - ${component}`));
+        });
+      }
+
+      if (blocks.length > 0) {
+        console.log(chalk.cyan('\nAvailable blocks:'));
+        blocks.forEach(block => {
+          console.log(chalk.white(`  - ${block}`));
+        });
+      }
     });
 
   // Version command
