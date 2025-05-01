@@ -1,21 +1,24 @@
 "use client";
-import React, { ReactNode, useState, ReactElement } from "react";
+import React, { ReactNode, useState, ReactElement, useId } from "react";
 
 type AccordionItemProps = {
+  id?: string;
   title: string;
   children: ReactNode;
   openIcon?: ReactNode;
   closeIcon?: ReactNode;
-  isOpen?: boolean; // Controls open/close state
-  onToggle?: () => void; // Handles toggle logic
+  isOpen?: boolean;
+  onToggle?: () => void;
 };
 
 type AccordionProps = {
-  children: ReactElement<AccordionItemProps>[]; // Enforce AccordionItem type for children
-  singleOpen?: boolean; // Enables single-open mode
+  children: ReactElement<AccordionItemProps> | ReactElement<AccordionItemProps>[];
+  singleOpen?: boolean;
+  defaultOpenIndex?: number | number[];
 };
 
 export const AccordionItem: React.FC<AccordionItemProps> = ({
+  id: providedId,
   title,
   children,
   openIcon = (
@@ -25,10 +28,11 @@ export const AccordionItem: React.FC<AccordionItemProps> = ({
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
       className="dark:invert"
+      aria-hidden="true"
     >
       <path
         d="M4 12h16M12 4v16"
-        stroke="#292D33"
+        stroke="currentColor"
         strokeWidth="2"
         strokeLinecap="round"
       />
@@ -41,10 +45,11 @@ export const AccordionItem: React.FC<AccordionItemProps> = ({
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
       className="dark:invert"
+      aria-hidden="true"
     >
       <path
         d="M4 12h16"
-        stroke="#292D33"
+        stroke="currentColor"
         strokeWidth="2"
         strokeLinecap="round"
       />
@@ -53,23 +58,33 @@ export const AccordionItem: React.FC<AccordionItemProps> = ({
   isOpen = false,
   onToggle,
 }) => {
+  const generatedId = useId();
+  const id = providedId || generatedId;
+  const contentId = `accordion-content-${id}`;
+
   return (
     <div
-      className={`rounded-lg shadow-lg border ${
-        isOpen ? "border-primary-600" : ""
+      className={`rounded-lg shadow-lg border transition-colors duration-200 ${
+        isOpen ? "border-primary-600" : "border-gray-200 dark:border-gray-700"
       }`}
     >
       <button
-        className="w-full text-left focus:outline-none font-semibold text-base lg:text-lg lg:p-6 p-4"
-        onClick={onToggle} // Bind the toggle function here
+        className="w-full text-left focus:outline-none focus:ring-2 focus:ring-primary-500 rounded-lg font-semibold text-base lg:text-lg lg:p-6 p-4"
+        onClick={onToggle}
         aria-expanded={isOpen}
+        aria-controls={contentId}
       >
         <div className="flex justify-between items-center">
           <span>{title}</span>
-          <span aria-hidden="true">{isOpen ? closeIcon : openIcon}</span>
+          <span className="transition-transform duration-300">
+            {isOpen ? closeIcon : openIcon}
+          </span>
         </div>
       </button>
       <div
+        id={contentId}
+        role="region"
+        aria-labelledby={`accordion-header-${id}`}
         className={`overflow-hidden transition-all duration-300 ease-in-out ${
           isOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
         }`}
@@ -85,31 +100,41 @@ export const AccordionItem: React.FC<AccordionItemProps> = ({
 export const Accordion: React.FC<AccordionProps> = ({
   children,
   singleOpen = true,
+  defaultOpenIndex = [],
 }) => {
-  const [openIndex, setOpenIndex] = useState<number[]>([]);
+  // Convert defaultOpenIndex to array if it's a number
+  const initialOpenIndexes = Array.isArray(defaultOpenIndex)
+    ? defaultOpenIndex
+    : [defaultOpenIndex];
+
+  const [openIndexes, setOpenIndexes] = useState<number[]>(initialOpenIndexes);
 
   const handleToggle = (index: number) => {
     if (singleOpen) {
-      setOpenIndex((prevIndex) => (prevIndex[0] === index ? [] : [index]));
+      setOpenIndexes(openIndexes[0] === index ? [] : [index]);
     } else {
-      setOpenIndex(
-        (prevIndex) =>
-          prevIndex.includes(index)
-            ? prevIndex.filter((i) => i !== index) // Close if already open
-            : [...prevIndex, index] // Open the new item
+      setOpenIndexes(
+        openIndexes.includes(index)
+          ? openIndexes.filter((i) => i !== index)
+          : [...openIndexes, index]
       );
     }
   };
 
+  // Handle case where children is a single element
+  const childrenArray = React.Children.toArray(children) as ReactElement<AccordionItemProps>[];
+
   return (
     <div className="grid w-full gap-6">
-      {React.Children.map(children, (child, index) =>
+      {childrenArray.map((child, index) =>
         React.isValidElement(child)
           ? React.cloneElement(child, {
-              isOpen: openIndex.includes(index), // Compare index for open behavior
-              onToggle: () => handleToggle(index), // Pass toggle function to each item
+              key: `accordion-item-${index}`,
+              id: child.props.id || `accordion-item-${index}`,
+              isOpen: openIndexes.includes(index),
+              onToggle: () => handleToggle(index),
             })
-          : child
+          : null
       )}
     </div>
   );
